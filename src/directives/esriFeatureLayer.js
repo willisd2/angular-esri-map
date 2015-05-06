@@ -21,7 +21,17 @@
 
                 require([
                     'esri/layers/FeatureLayer'], function (FeatureLayer) {
-                        var layerUrl = $scope.$eval($attrs.url);
+                        var urlRegex = /(http:\/\/|https:\/\/)/;  // simple url regex
+                        var isUrl = urlRegex.test($attrs.url);
+                        var layerUrl;
+
+                        if (isUrl) {
+                            layerUrl = $attrs.url;
+                        }
+                        else {
+                            layerUrl = $scope.$eval($attrs.url);
+                        }
+
                         var layer = new FeatureLayer(layerUrl);
 
                         layerDeferred.resolve(layer);
