@@ -1,4 +1,4 @@
-(function(angular) {
+(function (angular) {
     'use strict';
 
     angular.module('esri.map').directive('esriFeatureLayer', function ($q) {
@@ -21,10 +21,11 @@
 
                 require([
                     'esri/layers/FeatureLayer'], function (FeatureLayer) {
-                    var layer = new FeatureLayer($attrs.url);
+                        var layerUrl = $scope.$eval($attrs.url);
+                        var layer = new FeatureLayer(layerUrl);
 
-                    layerDeferred.resolve(layer);
-                });
+                        layerDeferred.resolve(layer);
+                    });
 
                 // return the defered that will be resolved with the feature layer
                 this.getLayer = function () {
@@ -39,8 +40,7 @@
                         if (isVisible === true || isVisible.toString().toLowerCase() === 'true') {
                             layer.show();
                         }
-                        else if(isVisible === false || isVisible.toString().toLowerCase() === 'false')
-                        {
+                        else if (isVisible === false || isVisible.toString().toLowerCase() === 'false') {
                             layer.hide();
                         }
 
@@ -77,10 +77,10 @@
 
                     //look for layerInfo related attributes. Add them to the map's layerInfos array for access in other components
                     mapController.addLayerInfo({
-                      title: attrs.title || layer.name,
-                      layer: layer,
-                      hideLayers: (attrs.hideLayers) ? attrs.hideLayers.split(',') : undefined,
-                      defaultSymbol: (attrs.defaultSymbol) ? JSON.parse(attrs.defaultSymbol) : true
+                        title: attrs.title || layer.name,
+                        layer: layer,
+                        hideLayers: (attrs.hideLayers) ? attrs.hideLayers.split(',') : undefined,
+                        defaultSymbol: (attrs.defaultSymbol) ? JSON.parse(attrs.defaultSymbol) : true
                     });
 
                     // return the layer
