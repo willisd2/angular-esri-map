@@ -1,7 +1,7 @@
 (function (angular) {
     'use strict';
 
-    angular.module('esri.map').directive('esriFeatureLayer', ['$q', function ($q) {
+    angular.module('esri.map').directive('esriFeatureLayer', function ($q) {
         // this object will tell angular how our directive behaves
         return {
             // only allow esriFeatureLayer to be used as an element (<esri-feature-layer>)
@@ -98,6 +98,6 @@
                 });
             }
         };
-    }]);
+    });
 
 })(angular);

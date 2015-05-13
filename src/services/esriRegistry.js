@@ -1,7 +1,7 @@
 (function (angular) {
   'use strict';
 
-  angular.module('esri.map').service('esriRegistry', ['$q', function ($q) {
+  angular.module('esri.map').service('esriRegistry', function ($q) {
     var registry = {};
 
     return {
@@ -49,6 +49,6 @@
         return deferred.promise;
       }
     };
-  }]);
+  });
 
 })(angular);

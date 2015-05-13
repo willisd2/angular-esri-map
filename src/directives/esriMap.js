@@ -9,7 +9,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('esri.map').directive('esriMap', ['$q', '$timeout', 'esriRegistry', function($q, $timeout, esriRegistry) {
+    angular.module('esri.map').directive('esriMap', function($q, $timeout, esriRegistry) {
 
         return {
             // element only
@@ -270,6 +270,6 @@
                 };
             }
         };
-    }]);
+    });
 
 })(angular);
