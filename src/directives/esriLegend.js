@@ -8,7 +8,7 @@
      * # esriLegend
      */
     angular.module('esri.map')
-      .directive('esriLegend', function ($document, $q) {
+      .directive('esriLegend', ['$document', '$q', function ($document, $q) {
         return {
           //run last
           priority: -10,
@@ -53,6 +53,6 @@
             });
           }
         };
-      });
+      }]);
 
 })(angular);

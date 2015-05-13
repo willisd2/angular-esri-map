@@ -3,7 +3,7 @@
 
     angular.module('esri.map', []);
 
-    angular.module('esri.map').factory('esriLoader', function ($q) {
+    angular.module('esri.map').factory('esriLoader', ['$q', function ($q) {
         return function (moduleName, callback) {
             var deferred = $q.defer();
             if (angular.isString(moduleName)) {
@@ -29,14 +29,14 @@
             }
             return deferred.promise;
         };
-    });
+    }]);
 
 })(angular);
 
 (function (angular) {
   'use strict';
 
-  angular.module('esri.map').service('esriRegistry', function ($q) {
+  angular.module('esri.map').service('esriRegistry', ['$q', function ($q) {
     var registry = {};
 
     return {
@@ -84,7 +84,7 @@
         return deferred.promise;
       }
     };
-  });
+  }]);
 
 })(angular);
 /*
@@ -98,7 +98,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('esri.map').directive('esriMap', function($q, $timeout, esriRegistry) {
+    angular.module('esri.map').directive('esriMap', ['$q', '$timeout', 'esriRegistry', function($q, $timeout, esriRegistry) {
 
         return {
             // element only
@@ -359,14 +359,14 @@
                 };
             }
         };
-    });
+    }]);
 
 })(angular);
 
 (function (angular) {
     'use strict';
 
-    angular.module('esri.map').directive('esriFeatureLayer', function ($q) {
+    angular.module('esri.map').directive('esriFeatureLayer', ['$q', function ($q) {
         // this object will tell angular how our directive behaves
         return {
             // only allow esriFeatureLayer to be used as an element (<esri-feature-layer>)
@@ -386,7 +386,17 @@
 
                 require([
                     'esri/layers/FeatureLayer'], function (FeatureLayer) {
-                        var layerUrl = $scope.$eval($attrs.url);
+                        var urlRegex = /(http:\/\/|https:\/\/)/;  // simple url regex
+                        var isUrl = urlRegex.test($attrs.url);
+                        var layerUrl;
+
+                        if (isUrl) {
+                            layerUrl = $attrs.url;
+                        }
+                        else {
+                            layerUrl = $scope.$eval($attrs.url);
+                        }
+
                         var layer = new FeatureLayer(layerUrl);
 
                         layerDeferred.resolve(layer);
@@ -453,7 +463,7 @@
                 });
             }
         };
-    });
+    }]);
 
 })(angular);
 
@@ -467,7 +477,7 @@
      * # esriLegend
      */
     angular.module('esri.map')
-      .directive('esriLegend', function ($document, $q) {
+      .directive('esriLegend', ['$document', '$q', function ($document, $q) {
         return {
           //run last
           priority: -10,
@@ -512,6 +522,6 @@
             });
           }
         };
-      });
+      }]);
 
 })(angular);

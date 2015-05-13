@@ -3,7 +3,7 @@
 
     angular.module('esri.map', []);
 
-    angular.module('esri.map').factory('esriLoader', function ($q) {
+    angular.module('esri.map').factory('esriLoader', ['$q', function ($q) {
         return function (moduleName, callback) {
             var deferred = $q.defer();
             if (angular.isString(moduleName)) {
@@ -29,6 +29,6 @@
             }
             return deferred.promise;
         };
-    });
+    }]);
 
 })(angular);
